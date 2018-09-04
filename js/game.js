@@ -17,5 +17,6 @@ phina.define('MyGame', {
 			fps: FPS,
 			assets: ASSETS
 		});
+		common = Common();
   },
 });

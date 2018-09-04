@@ -1,7 +1,9 @@
-var SPEED = 4;
-
 phina.define('Tomapiko', {
   superClass: 'Sprite',
+	speed: 4,
+	apf:4, //animation per frame
+	move: {'wait':true,'left':false, 'right':true},
+	halfx: SCREEN_WIDTH / 2, //画面中央
 
   init: function() {
     this.superInit('tomapiko', 64, 64);
@@ -10,32 +12,51 @@ phina.define('Tomapiko', {
   },
 
 	update: function(app) {
-    var p = app.pointer;
+		this._control(app);
+		this._move(app);
+  },
 
-    if (p.getPointing()) {
-      var diff = this.x - p.x;
-      if (Math.abs(diff) > SPEED) {
-        // 右に移動
-        if (diff < 0) {
-          this.x += SPEED;
-          this.scaleX = -1;
-        }
-        // 左に移動
-        else {
-          this.x -= SPEED;
-          this.scaleX = 1;
-        }
+	_control: function(app) {
+		var keyboard = app.keyboard;
+		var p = app.pointer;
+		this.move.left  = false;
+		this.move.right = false;
+		this.move.wait  = false;
+		if (keyboard.getKey('left')) {
+			this.move.left  = true;
+		} else if (keyboard.getKey('right')) {
+			this.move.right = true;
+		} else {
+			if (p.getPointing()) {
+				if (p.x < this.halfx) {
+					this.move.left  = true;
+				} else {
+					this.move.right = true;
+				}
+			} else {
+				this.move.wait  = true;
+			}
+		}
+	},
 
-        // フレームアニメーション
-        if (app.frame % 4 === 0) {
-          this.frameIndex = (this.frameIndex === 12) ? 13:12;
-        }
-      }
-    }
-    else {
-      // 待機
-      this.frameIndex = 0;
-    }
-  }
+	_move: function(app) {
+		if (this.move.left) {
+			this.x -= this.speed;
+			this.scaleX = 1;
+			this._animation(app);
+		} else if (this.move.right) {
+			this.x += this.speed;
+			this.scaleX = -1;
+			this._animation(app);
+		} else {
+			this.frameIndex = 0;
+		}
+	},
+
+	_animation: function(app) {
+		if (app.frame % this.apf === 0) {
+			this.frameIndex = (this.frameIndex === 12) ? 13:12;
+		}
+	}
 
 });

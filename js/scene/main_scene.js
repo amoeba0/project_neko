@@ -5,9 +5,6 @@ phina.define('MainScene', {
   // 継承
   superClass: 'DisplayScene',
 
-	// サンプル、phinajsの動作確認用
-	sample_group: null,
-
   // 初期化
   init: function() {
     // super init
@@ -19,6 +16,9 @@ phina.define('MainScene', {
     // 背景色
     this.backgroundColor = '#2196F3';
 
-		this.sample_group = SampleGroup().addChildTo(this);
+		//thisは付けずにグローバルとして扱う
+		common = Common();
+		main_group = MainGroup().addChildTo(this);
+		system_group = SystemGroup().addChildTo(this);
   }
 });

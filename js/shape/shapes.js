@@ -24,5 +24,11 @@ phina.define('Circle', {
       this.bottom = SCREEN_HEIGHT;
       this.vy *= -1;
     }
+
+		if (this.hitTestElement(main_group.player)) {
+			common.point += 1;
+			system_group.count.changeText(common.point);
+			this.remove();
+		}
   },
 });

@@ -17,6 +17,7 @@ phina.define('MainScene', {
     this.backgroundColor = '#2196F3';
 
 		//thisは付けずにグローバルとして扱う
+		main_scene = this;
 		main_group = MainGroup().addChildTo(this);
 		system_group = SystemGroup().addChildTo(this);
   },

@@ -6,6 +6,7 @@ phina.define('SystemGroup', {
   superClass: 'DisplayElement',
 	label :null,
 	count :null,
+	pause_button:null,
 	init: function() {
     // super init
     this.superInit({
@@ -13,6 +14,7 @@ phina.define('SystemGroup', {
       height: SCREEN_HEIGHT,
     });
 		this.setLabel();
+		this.setPauseButton();
 	},
 	// ラベルを生成
 	setLabel: function() {
@@ -22,5 +24,9 @@ phina.define('SystemGroup', {
 
 		this.count = CountLabel().addChildTo(this);
 	},
+
+	setPauseButton: function() {
+		this.pause_button = PauseButton().addChildTo(this);
+	}
 
 });
